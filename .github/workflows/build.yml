@@ -23,12 +23,14 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Build Minecraft mod
-        run: gradle build
+           - name: Build Minecraft mod
+        run: |
+          find . -name build.gradle
+          gradle -p "$(dirname "$(find . -name build.gradle -print -quit)")" build
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4
         with:
           name: DonutSMP-Economy-HUD
-          path: build/libs/*.jar
+    path: '**/build/libs/*.jar'
           if-no-files-found: error
